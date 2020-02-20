@@ -1,7 +1,7 @@
 package jpabook.jpashop;
 
-import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.domain.OrderItem;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,10 +17,12 @@ public class JpaMain {
 
         try {
 
-            Order order = em.find(Order.class , 1L);
-            Long memeberId = order.getMemberId();
-            Member memeber = em.find(Member.class, memeberId);
-            // 객체그래프탐색 불가
+            Order order = new Order();
+            em.persist(order);
+
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            em.persist(orderItem);
 
             tx.commit();
         } catch (Exception e) {
